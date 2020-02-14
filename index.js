@@ -1,6 +1,7 @@
 const arrayOfPdfs = ["index", "index2"]
 
 let links = []
+let iframes = []
 
 var fileDownloadHandler = function () {
     let root = document.getElementById("root")
@@ -21,6 +22,14 @@ var fileDownloadHandler = function () {
     downloadAllButton.innerText = "Download All"
     root.append(downloadAllButton)
     //MAILTO LINK
+    //Create iframes with the pdfs
+    arrayOfPdfs.forEach(pdfUri => {
+        let iframe = document.createElement("iframe")
+        iframe.src = `./${pdfUri}.pdf`
+        iframe.hidden = true
+        iframes.push(iframe)
+        document.body.append(iframe)
+    })
 
     //PRINT
     links.forEach((link, index) => {
@@ -62,7 +71,9 @@ const createDownloadLink = (fileName) => {
 }
 
 const handlePrintClick = () => {
-    links.forEach(link => {
-        
+    iframes.forEach(iframe => {
+        debugger
+        iframe.focus()
+        iframe.contentWindow.print()
     })
 }
